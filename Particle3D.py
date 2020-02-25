@@ -169,11 +169,11 @@ class Projectile(Particle):
         # this is a faster way to construct a list than an explicit for loop
 
 
-        v_hat = np.array([np.abs(vi)/vi if vi else 0 for vi in v])
         mod_v = np.sqrt(np.sum(v**2))
+        v_hat = np.array( [vi/mod_v if vi else 0 for vi in v] )
          
          
-        Drag = -self.Cd*v_hat*mod_v*v
+        Drag = -self.Cd*v_hat*(mod_v)**2
         G = np.array([0,0,-self.m*g])
 
         return G+Drag
