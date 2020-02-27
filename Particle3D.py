@@ -9,7 +9,6 @@ class Particle(object):
     m = 1.0
 
     def __init__(self, x0=1.0, y0 =0.0, z0= 0.00, u0=0.0, v0 = 0.0, w0 = 0.0,  tf = 10.0, dt = 0.01):
-        # print("particle init'd")
         self.x = np.array([x0,y0,z0])
         self.v = np.array([u0,v0,w0])
         self.t = 0.0
@@ -169,11 +168,11 @@ class Projectile(Particle):
         # this is a faster way to construct a list than an explicit for loop
 
 
-        mod_v = np.sqrt(np.sum(v**2))
+        mod_v = np.sqrt(np.dot(v,v))
         v_hat = np.array( [vi/mod_v if vi else 0 for vi in v] )
          
          
-        Drag = -self.Cd*v_hat*(mod_v)**2
+        Drag = -self.Cd*v_hat*np.dot(v,v)
         G = np.array([0,0,-self.m*g])
 
         return G+Drag
